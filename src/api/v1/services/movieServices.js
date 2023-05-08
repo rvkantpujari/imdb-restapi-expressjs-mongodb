@@ -54,7 +54,14 @@ const getAllMovies = (reqQuery) => {
     }
 };
 
-const getMovieByTitleId = () => {
+const getMovieByTitleId = (reqQuery) => {
+    try {
+        const title_id = reqQuery.title_id;
+        const movie = Movie.getMovieByTitleId(title_id);
+        return movie;
+    } catch (error) {
+        throw error;
+    }
     return;
 };
 

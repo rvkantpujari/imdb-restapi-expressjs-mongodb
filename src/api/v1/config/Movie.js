@@ -12,6 +12,16 @@ const getAllMovies = async (queryObj, queryOptions) => {
     }
 };
 
+const getMovieByTitleId = async (title_id) => {
+    try {
+        const movie = await Movie.find({ title_id });
+        return movie;
+    } catch (error) {
+        throw { status: 500, message: error };
+    }
+};
+
 module.exports = {
     getAllMovies,
+    getMovieByTitleId,
 };

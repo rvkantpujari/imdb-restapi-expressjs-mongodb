@@ -12,9 +12,16 @@ const getAllMovies = async (req, res) => {
     }
 };
 
-const getMovieByTitleId = (req, res) => {
-    const movie = movieService.getMovieByTitleId();
-    res.send("Get movie by title_id.");
+const getMovieByTitleId = async (req, res) => {
+    try {
+        const movie = await movieService.getMovieByTitleId(req.params);
+        res.status(200).send({ status: "OK", movie: movie });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 const getMoviePosterByTitleId = (req, res) => {

@@ -1,67 +1,119 @@
-const getAllMovies = () => {
-  return;
+const Movie = require("../config/Movie");
+
+const getAllMovies = (reqQuery) => {
+    try {
+        const queryObj = {};
+        if (reqQuery.title_id) {
+            queryObj.title_id = { $regex: reqQuery.title_id, $options: "i" };
+        }
+        if (reqQuery.title) {
+            queryObj.title = { $regex: reqQuery.title, $options: "i" };
+        }
+        if (reqQuery.certificate) {
+            queryObj.certificate = {
+                $regex: reqQuery.certificate,
+                $options: "i",
+            };
+        }
+        if (reqQuery.runtime) {
+            queryObj.runtime = { $regex: reqQuery.runtime, $options: "i" };
+        }
+        if (reqQuery.description) {
+            queryObj.description = {
+                $regex: reqQuery.description,
+                $options: "i",
+            };
+        }
+        if (reqQuery.genre) {
+            let genre = reqQuery.genre.split(",");
+            genre = genre.join("|");
+            queryObj.genre = { $regex: genre, $options: "i" };
+        }
+
+        if (reqQuery.releaseYear) {
+            queryObj.releaseYear = reqQuery.releaseYear;
+        }
+        if (reqQuery.rating) {
+            queryObj.rating = reqQuery.rating;
+        }
+
+        const queryOptions = {};
+        queryOptions.page = reqQuery.page || 1;
+        queryOptions.limit = reqQuery.limit || 10;
+        queryOptions.skip =
+            (Number(reqQuery.page) - 1) * Number(reqQuery.limit);
+
+        if (reqQuery.sort) {
+            queryOptions.sort = reqQuery.sort.replace(",", " ");
+        }
+
+        const allMovies = Movie.getAllMovies(queryObj, queryOptions);
+        return allMovies;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMovieByTitleId = () => {
-  return;
+    return;
 };
 
 const getMoviePosterByTitleId = () => {
-  return;
+    return;
 };
 
 const getMovieReleaseYearByTitleId = () => {
-  return;
+    return;
 };
 
 const getMovieRatingByTitleId = () => {
-  return;
+    return;
 };
 
 const getMovieCertificateByTitleId = () => {
-  return;
+    return;
 };
 
 const getMovieRuntimeByTitleId = () => {
-  return;
+    return;
 };
 
 const getMovieGenreByTitleId = () => {
-  return;
+    return;
 };
 
 const getTopRatedMovies = () => {
-  return;
+    return;
 };
 
 const getMoviesByYear = () => {
-  return;
+    return;
 };
 
 const getMoviesByCertification = () => {
-  return;
+    return;
 };
 
 const getMoviesByGenre = () => {
-  return;
+    return;
 };
 
 const getRandomMovie = () => {
-  return;
+    return;
 };
 
 module.exports = {
-  getAllMovies,
-  getMovieByTitleId,
-  getMoviePosterByTitleId,
-  getMovieReleaseYearByTitleId,
-  getMovieRatingByTitleId,
-  getMovieCertificateByTitleId,
-  getMovieRuntimeByTitleId,
-  getMovieGenreByTitleId,
-  getTopRatedMovies,
-  getMoviesByYear,
-  getMoviesByCertification,
-  getMoviesByGenre,
-  getRandomMovie,
+    getAllMovies,
+    getMovieByTitleId,
+    getMoviePosterByTitleId,
+    getMovieReleaseYearByTitleId,
+    getMovieRatingByTitleId,
+    getMovieCertificateByTitleId,
+    getMovieRuntimeByTitleId,
+    getMovieGenreByTitleId,
+    getTopRatedMovies,
+    getMoviesByYear,
+    getMoviesByCertification,
+    getMoviesByGenre,
+    getRandomMovie,
 };

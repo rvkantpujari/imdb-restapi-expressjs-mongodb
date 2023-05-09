@@ -95,8 +95,14 @@ const getMovieRatingByTitleId = (reqQuery) => {
     }
 };
 
-const getMovieCertificateByTitleId = () => {
-    return;
+const getMovieCertificateByTitleId = (reqQuery) => {
+    try {
+        const title_id = reqQuery.title_id;
+        const movie = Movie.getMovieCertificateByTitleId(title_id);
+        return movie;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMovieRuntimeByTitleId = () => {

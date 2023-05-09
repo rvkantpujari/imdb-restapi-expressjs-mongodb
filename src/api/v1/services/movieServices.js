@@ -115,8 +115,14 @@ const getMovieRuntimeByTitleId = (reqQuery) => {
     }
 };
 
-const getMovieGenreByTitleId = () => {
-    return;
+const getMovieGenreByTitleId = (reqQuery) => {
+    try {
+        const title_id = reqQuery.title_id;
+        const movie = Movie.getMovieGenreByTitleId(title_id);
+        return movie;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getTopRatedMovies = () => {

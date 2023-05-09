@@ -65,8 +65,14 @@ const getMovieByTitleId = (reqQuery) => {
     return;
 };
 
-const getMoviePosterByTitleId = () => {
-    return;
+const getMoviePosterByTitleId = (reqQuery) => {
+    try {
+        const title_id = reqQuery.title_id;
+        const movie = Movie.getMoviePosterByTitleId(title_id);
+        return movie;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMovieReleaseYearByTitleId = () => {

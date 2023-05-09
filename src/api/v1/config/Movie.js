@@ -69,6 +69,18 @@ const getMovieCertificateByTitleId = async (title_id) => {
     }
 };
 
+const getMovieRuntimeByTitleId = async (title_id) => {
+    try {
+        const movie = await Movie.find({ title_id }).select({
+            runtime: 1,
+            _id: 0,
+        });
+        return movie;
+    } catch (error) {
+        throw { status: 500, message: error };
+    }
+};
+
 module.exports = {
     getAllMovies,
     getMovieByTitleId,
@@ -76,4 +88,5 @@ module.exports = {
     getMovieReleaseYearByTitleId,
     getMovieRatingByTitleId,
     getMovieCertificateByTitleId,
+    getMovieRuntimeByTitleId,
 };

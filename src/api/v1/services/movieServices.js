@@ -105,8 +105,14 @@ const getMovieCertificateByTitleId = (reqQuery) => {
     }
 };
 
-const getMovieRuntimeByTitleId = () => {
-    return;
+const getMovieRuntimeByTitleId = (reqQuery) => {
+    try {
+        const title_id = reqQuery.title_id;
+        const movie = Movie.getMovieRuntimeByTitleId(title_id);
+        return movie;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMovieGenreByTitleId = () => {

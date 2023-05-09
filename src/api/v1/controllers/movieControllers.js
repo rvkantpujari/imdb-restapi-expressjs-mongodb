@@ -76,9 +76,16 @@ const getMovieCertificateByTitleId = async (req, res) => {
     }
 };
 
-const getMovieRuntimeByTitleId = (req, res) => {
-    const movie = movieService.getMovieRuntimeByTitleId();
-    res.send("Get movie runtime by title_id.");
+const getMovieRuntimeByTitleId = async (req, res) => {
+    try {
+        const movie = await movieService.getMovieRuntimeByTitleId(req.params);
+        res.status(200).send({ status: "OK", movie: movie });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 const getMovieGenreByTitleId = (req, res) => {

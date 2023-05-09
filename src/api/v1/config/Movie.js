@@ -33,8 +33,21 @@ const getMoviePosterByTitleId = async (title_id) => {
     }
 };
 
+const getMovieReleaseYearByTitleId = async (title_id) => {
+    try {
+        const movie = await Movie.find({ title_id }).select({
+            releaseYear: 1,
+            _id: 0,
+        });
+        return movie;
+    } catch (error) {
+        throw { status: 500, message: error };
+    }
+};
+
 module.exports = {
     getAllMovies,
     getMovieByTitleId,
     getMoviePosterByTitleId,
+    getMovieReleaseYearByTitleId,
 };

@@ -50,9 +50,16 @@ const getMovieReleaseYearByTitleId = async (req, res) => {
     }
 };
 
-const getMovieRatingByTitleId = (req, res) => {
-    const movie = movieService.getMovieRatingByTitleId();
-    res.send("Get movie rating by title_id.");
+const getMovieRatingByTitleId = async (req, res) => {
+    try {
+        const movie = await movieService.getMovieRatingByTitleId(req.params);
+        res.status(200).send({ status: "OK", movie: movie });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 const getMovieCertificateByTitleId = (req, res) => {

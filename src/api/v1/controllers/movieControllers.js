@@ -127,9 +127,16 @@ const getMoviesByGenre = (req, res) => {
     res.send("Get a list of movies with a specific genre.");
 };
 
-const getRandomMovie = (req, res) => {
-    const movie = movieService.getRandomMovie();
-    res.send("Get a random movie.");
+const getRandomMovie = async (req, res) => {
+    try {
+        const movie = await movieService.getRandomMovie();
+        res.status(200).send({ status: "OK", movie: movie });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 module.exports = {

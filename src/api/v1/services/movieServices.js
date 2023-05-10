@@ -148,7 +148,12 @@ const getMoviesByGenre = () => {
 };
 
 const getRandomMovie = () => {
-    return;
+    try {
+        const movies = Movie.getRandomMovie();
+        return movies;
+    } catch (error) {
+        throw error;
+    }
 };
 
 module.exports = {

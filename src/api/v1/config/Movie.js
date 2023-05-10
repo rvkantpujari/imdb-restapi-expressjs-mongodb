@@ -102,6 +102,18 @@ const getMoviesByYear = async (releaseYear) => {
     }
 };
 
+const getRandomMovie = async () => {
+    try {
+        const moviesCount = await Movie.countDocuments();
+        const randNum = Math.floor(Math.random() * moviesCount);
+        console.log(randNum);
+        const movies = await Movie.findOne().skip(randNum);
+        return movies;
+    } catch (error) {
+        throw { status: 500, message: error };
+    }
+};
+
 module.exports = {
     getAllMovies,
     getMovieByTitleId,
@@ -112,4 +124,5 @@ module.exports = {
     getMovieRuntimeByTitleId,
     getMovieGenreByTitleId,
     getMoviesByYear,
+    getRandomMovie,
 };

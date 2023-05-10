@@ -129,8 +129,14 @@ const getTopRatedMovies = () => {
     return;
 };
 
-const getMoviesByYear = () => {
-    return;
+const getMoviesByYear = (reqQuery) => {
+    try {
+        const releaseYear = reqQuery.year;
+        const movies = Movie.getMoviesByYear(releaseYear);
+        return movies;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMoviesByCertification = () => {

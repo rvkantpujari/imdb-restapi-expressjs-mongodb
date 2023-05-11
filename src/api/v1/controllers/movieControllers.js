@@ -117,9 +117,16 @@ const getMoviesByYear = async (req, res) => {
     }
 };
 
-const getMoviesByCertification = (req, res) => {
-    const movies = movieService.getMoviesByCertification();
-    res.send("Get a list of movies with a specific certification rating.");
+const getMoviesByCertification = async (req, res) => {
+    try {
+        const movies = await movieService.getMoviesByCertification(req.params);
+        res.status(200).send({ status: "OK", movies: movies });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 const getMoviesByGenre = (req, res) => {

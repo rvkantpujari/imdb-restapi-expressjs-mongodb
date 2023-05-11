@@ -102,6 +102,15 @@ const getMoviesByYear = async (releaseYear) => {
     }
 };
 
+const getMoviesByCertification = async (certificate) => {
+    try {
+        const movies = await Movie.find(certificate);
+        return movies;
+    } catch (error) {
+        throw { status: 500, message: error };
+    }
+};
+
 const getRandomMovie = async () => {
     try {
         const moviesCount = await Movie.countDocuments();
@@ -124,5 +133,6 @@ module.exports = {
     getMovieRuntimeByTitleId,
     getMovieGenreByTitleId,
     getMoviesByYear,
+    getMoviesByCertification,
     getRandomMovie,
 };

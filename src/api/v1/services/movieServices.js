@@ -139,8 +139,19 @@ const getMoviesByYear = (reqQuery) => {
     }
 };
 
-const getMoviesByCertification = () => {
-    return;
+const getMoviesByCertification = (reqQuery) => {
+    try {
+        const queryObj = {};
+        let certificate = reqQuery.certificate.split(",");
+        if (certificate) {
+            certificate = certificate.map((c) => c.toUpperCase());
+            queryObj.certificate = { $in: certificate };
+        }
+        const movies = Movie.getMoviesByCertification(queryObj);
+        return movies;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMoviesByGenre = () => {

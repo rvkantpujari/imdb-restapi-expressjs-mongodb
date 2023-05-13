@@ -105,9 +105,11 @@ const getTopRatedMovies = async (queryOptions) => {
     }
 };
 
-const getMoviesByYear = async (releaseYear) => {
+const getMoviesByYear = async (releaseYear, queryOptions) => {
     try {
-        const movies = await Movie.find({ releaseYear });
+        const movies = await Movie.find({ releaseYear })
+            .limit(queryOptions.limit)
+            .skip(queryOptions.skip);
         return movies;
     } catch (error) {
         throw { status: 500, message: error };

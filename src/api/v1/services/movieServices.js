@@ -137,10 +137,14 @@ const getTopRatedMovies = (reqQuery) => {
     }
 };
 
-const getMoviesByYear = (reqQuery) => {
+const getMoviesByYear = (reqParams, reqQuery) => {
     try {
-        const releaseYear = reqQuery.year;
-        const movies = Movie.getMoviesByYear(releaseYear);
+        const queryOptions = {};
+        queryOptions.page = Number(reqQuery.page) || 1;
+        queryOptions.limit = Number(reqQuery.limit) || 10;
+        queryOptions.skip = (queryOptions.page - 1) * queryOptions.limit;
+        const releaseYear = reqParams.year;
+        const movies = Movie.getMoviesByYear(releaseYear, queryOptions);
         return movies;
     } catch (error) {
         throw error;

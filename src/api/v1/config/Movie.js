@@ -93,6 +93,18 @@ const getMovieGenreByTitleId = async (title_id) => {
     }
 };
 
+const getTopRatedMovies = async (queryOptions) => {
+    try {
+        const movies = await Movie.find({})
+            .sort({ rating: -1 })
+            .limit(queryOptions.limit)
+            .skip(queryOptions.skip);
+        return movies;
+    } catch (error) {
+        throw { status: 500, message: error };
+    }
+};
+
 const getMoviesByYear = async (releaseYear) => {
     try {
         const movies = await Movie.find({ releaseYear });
@@ -141,6 +153,7 @@ module.exports = {
     getMovieCertificateByTitleId,
     getMovieRuntimeByTitleId,
     getMovieGenreByTitleId,
+    getTopRatedMovies,
     getMoviesByYear,
     getMoviesByCertification,
     getMoviesByGenre,

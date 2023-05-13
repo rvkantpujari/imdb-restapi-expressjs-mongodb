@@ -100,9 +100,16 @@ const getMovieGenreByTitleId = async (req, res) => {
     }
 };
 
-const getTopRatedMovies = (req, res) => {
-    const movies = movieService.getTopRatedMovies();
-    res.send("Get a list of top-rated Movies.");
+const getTopRatedMovies = async (req, res) => {
+    try {
+        const movies = await movieService.getTopRatedMovies(req.query);
+        res.status(200).send({ status: "OK", movies: movies });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 const getMoviesByYear = async (req, res) => {

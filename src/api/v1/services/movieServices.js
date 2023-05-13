@@ -125,8 +125,17 @@ const getMovieGenreByTitleId = (reqQuery) => {
     }
 };
 
-const getTopRatedMovies = () => {
-    return;
+const getTopRatedMovies = (reqQuery) => {
+    try {
+        const queryOptions = {};
+        queryOptions.page = Number(reqQuery.page) || 1;
+        queryOptions.limit = Number(reqQuery.limit) || 10;
+        queryOptions.skip = (queryOptions.page - 1) * queryOptions.limit;
+        const movies = Movie.getTopRatedMovies(queryOptions);
+        return movies;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getMoviesByYear = (reqQuery) => {

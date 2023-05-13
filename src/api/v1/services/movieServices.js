@@ -38,10 +38,9 @@ const getAllMovies = (reqQuery) => {
         }
 
         const queryOptions = {};
-        queryOptions.page = reqQuery.page || 1;
-        queryOptions.limit = reqQuery.limit || 10;
-        queryOptions.skip =
-            (Number(reqQuery.page) - 1) * Number(reqQuery.limit);
+        queryOptions.page = Number(reqQuery.page) || 1;
+        queryOptions.limit = Number(reqQuery.limit) || 10;
+        queryOptions.skip = (queryOptions.page - 1) * queryOptions.limit;
 
         if (reqQuery.sort) {
             queryOptions.sort = reqQuery.sort.replace(",", " ");

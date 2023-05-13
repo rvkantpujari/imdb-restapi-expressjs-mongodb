@@ -154,8 +154,22 @@ const getMoviesByCertification = (reqQuery) => {
     }
 };
 
-const getMoviesByGenre = () => {
-    return;
+const getMoviesByGenre = (reqQuery) => {
+    try {
+        const queryObj = {};
+        let genre = reqQuery.genre.split(",");
+        if (genre) {
+            genre = genre.map((g) => {
+                g = g.trim();
+                return g[0].toUpperCase() + g.slice(1);
+            });
+            queryObj.genre = { $in: genre };
+        }
+        const movies = Movie.getMoviesByGenre(queryObj);
+        return movies;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const getRandomMovie = () => {

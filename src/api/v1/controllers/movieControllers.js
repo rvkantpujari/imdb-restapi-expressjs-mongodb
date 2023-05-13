@@ -129,9 +129,16 @@ const getMoviesByCertification = async (req, res) => {
     }
 };
 
-const getMoviesByGenre = (req, res) => {
-    const movies = movieService.getMoviesByGenre();
-    res.send("Get a list of movies with a specific genre.");
+const getMoviesByGenre = async (req, res) => {
+    try {
+        const movies = await movieService.getMoviesByGenre(req.params);
+        res.status(200).send({ status: "OK", movies: movies });
+    } catch (error) {
+        res.status(error.status || 500).send({
+            status: "FAILED",
+            movies: { error: error.message || error },
+        });
+    }
 };
 
 const getRandomMovie = async (req, res) => {

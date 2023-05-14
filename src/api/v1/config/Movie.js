@@ -116,9 +116,11 @@ const getMoviesByYear = async (releaseYear, queryOptions) => {
     }
 };
 
-const getMoviesByCertification = async (certificate) => {
+const getMoviesByCertification = async (certificate, queryOptions) => {
     try {
-        const movies = await Movie.find(certificate);
+        const movies = await Movie.find(certificate)
+            .limit(queryOptions.limit)
+            .skip(queryOptions.skip);
         return movies;
     } catch (error) {
         throw { status: 500, message: error };

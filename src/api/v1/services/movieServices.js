@@ -151,15 +151,21 @@ const getMoviesByYear = (reqParams, reqQuery) => {
     }
 };
 
-const getMoviesByCertification = (reqQuery) => {
+const getMoviesByCertification = (reqParams, reqQuery) => {
     try {
         const queryObj = {};
-        let certificate = reqQuery.certificate.split(",");
+        let certificate = reqParams.certificate.split(",");
         if (certificate) {
             certificate = certificate.map((c) => c.toUpperCase());
             queryObj.certificate = { $in: certificate };
         }
-        const movies = Movie.getMoviesByCertification(queryObj);
+
+        const queryOptions = {};
+        queryOptions.page = Number(reqQuery.page) || 1;
+        queryOptions.limit = Number(reqQuery.limit) || 10;
+        queryOptions.skip = (queryOptions.page - 1) * queryOptions.limit;
+
+        const movies = Movie.getMoviesByCertification(queryObj, queryOptions);
         return movies;
     } catch (error) {
         throw error;

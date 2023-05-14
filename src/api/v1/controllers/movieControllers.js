@@ -129,7 +129,10 @@ const getMoviesByYear = async (req, res) => {
 
 const getMoviesByCertification = async (req, res) => {
     try {
-        const movies = await movieService.getMoviesByCertification(req.params);
+        const movies = await movieService.getMoviesByCertification(
+            req.params,
+            req.query
+        );
         res.status(200).send({ status: "OK", movies: movies });
     } catch (error) {
         res.status(error.status || 500).send({

@@ -119,6 +119,7 @@ const getMoviesByYear = async (releaseYear, queryOptions) => {
 const getMoviesByCertification = async (certificate, queryOptions) => {
     try {
         const movies = await Movie.find(certificate)
+            .sort(queryOptions.sort)
             .limit(queryOptions.limit)
             .skip(queryOptions.skip);
         return movies;

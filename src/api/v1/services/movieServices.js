@@ -165,6 +165,10 @@ const getMoviesByCertification = (reqParams, reqQuery) => {
         queryOptions.limit = Number(reqQuery.limit) || 10;
         queryOptions.skip = (queryOptions.page - 1) * queryOptions.limit;
 
+        if (reqQuery.sort) {
+            queryOptions.sort = reqQuery.sort.replace(",", " ");
+        }
+
         const movies = Movie.getMoviesByCertification(queryObj, queryOptions);
         return movies;
     } catch (error) {
